@@ -18,7 +18,7 @@
         <input id="age" type="text">
 <button id="button">Update Instructor</button>
 <a href="http://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.1+commit.df193b15.js">http://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.1+commit.df193b15.js</>
-<a href="https://medium.com/@yangnana11/interacting-with-a-smart-contract-through-web3-js-tutorial-56a7ff2ff153">https://medium.com/@yangnana11/interacting-with-a-smart-contract-through-web3-js-tutorial-56a7ff2ff153</>
+<a href="https://coursetro.com/posts/code/99/Interacting-with-a-Smart-Contract-through-Web3.js-(Tutorial)">https://coursetro.com/posts/code/99/Interacting-with-a-Smart-Contract-through-Web3.js-(Tutorial)</>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script>
@@ -83,10 +83,10 @@ CoursetroContract.methods.getInstructor().call(function(error, result){
                 console.error(error);
         });
 $("#button").click(function() {
-    aaaaa = web3.utils.padRight(web3.utils.asciiToHex($("#name").val()), 64)
-    console.log(aaaaa)
+    newName = web3.utils.padRight(web3.utils.asciiToHex($("#name").val()), 64)
+    console.log(newName)
 
-    CoursetroContract.methods.setInstructor(aaaaa, $("#age").val()).send({from: value[0]}).then(function(result){
+    CoursetroContract.methods.setInstructor(newName, $("#age").val()).send({from: value[0]}).then(function(result){
     if(result)
                 {
                     console.log(result)
