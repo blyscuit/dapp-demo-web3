@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+<script src="node_modules/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    <div class="container">
+<h1>Coursetro Instructor</h1>
+<h2 id="instructor"></h2>
+<label for="name" class="col-lg-2 control-label">Instructor Name</label>
+        <input id="name" type="text">
+<label for="name" class="col-lg-2 control-label">Instructor Age</label>
+        <input id="age" type="text">
+<button id="button">Update Instructor</button>
+<a href="http://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.1+commit.df193b15.js">http://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.1+commit.df193b15.js</>
+<a href="https://medium.com/@yangnana11/interacting-with-a-smart-contract-through-web3-js-tutorial-56a7ff2ff153">https://medium.com/@yangnana11/interacting-with-a-smart-contract-through-web3-js-tutorial-56a7ff2ff153</>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script>
+if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));   
+        }
+        web3.eth.getAccounts().then((value) => {
+console.log(value)
+  web3.eth.defaultAccount = value[0];
+
+  var CoursetroContract = new web3.eth.Contract([
+	{
+		"inputs": [],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_fName",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			}
+		],
+		"name": "setInstructor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+], '0x5B69048B62B02366E589A0474AC878dA9C7d14F5');
+  console.log(CoursetroContract)
+// var Coursetro = CoursetroContract.at('0x5B69048B62B02366E589A0474AC878dA9C7d14F5');
+//   console.log(Coursetro);
+CoursetroContract.methods.getInstructor().call(function(error, result){
+    if(!error)
+                {
+                    $("#instructor").html(web3.utils.hexToAscii(result[0])+' ('+result[1]+' years old)');
+                    console.log(result);
+                }
+            else
+                console.error(error);
+        });
+$("#button").click(function() {
+    aaaaa = web3.utils.padRight(web3.utils.asciiToHex($("#name").val()), 64)
+    console.log(aaaaa)
+
+    CoursetroContract.methods.setInstructor(aaaaa, $("#age").val()).send({from: value[0]}).then(function(result){
+    if(result)
+                {
+                    console.log(result)
+                    $("#instructor").html($("#name").val()+' ('+$("#age").val()+' years old)');
+                }
+        });
+        });
+        });
+</script>
+</body>
+</html>
